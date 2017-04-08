@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 
+import com.tracker.adapter.AttendenceAdapter;
+
 public class Attendence extends AppCompatActivity {
     ListView listView;
     @Override
@@ -16,6 +18,8 @@ public class Attendence extends AppCompatActivity {
         setContentView(R.layout.activity_attendence);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         listView = (ListView)findViewById(R.id.listview_attendence);
+        AttendenceAdapter attendenceAdapter = new AttendenceAdapter(this);
+        listView.setAdapter(attendenceAdapter);
         setSupportActionBar(toolbar);
 
     }
