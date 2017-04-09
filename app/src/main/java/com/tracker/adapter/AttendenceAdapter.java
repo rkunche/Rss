@@ -23,6 +23,7 @@ public class AttendenceAdapter extends BaseAdapter {
        //initial comment
        //comment made by raju
         //test commit1
+        //Comments insterted by Ravi
         this.context = context;
         this.memberList = members;
         inflater = LayoutInflater.from(context);
