@@ -36,6 +36,10 @@ public class AttendenceAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if(memberList == null)
+        {
+            return 0;
+        }
         return memberList.size();
     }
 

@@ -5,10 +5,10 @@ import io.realm.RealmObject;
 
 public class Member extends RealmObject{
 
-    String mContact;
-    String mName;
-    String mKhand;
-    String meanen;
+    private String mContact;
+    private String mName;
+    private String mKhand;
+    private String meanen;
 
     public String getmContact() {
         return mContact;
