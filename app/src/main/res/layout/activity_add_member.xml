@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tracker.student.ketto.AddMember">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dp" android:layout_height="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+    <TextView
+        android:id="@+id/text_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="66dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="92dp"
+        android:text="Name"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/text_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Contact"
+        android:layout_below="@+id/text_name"
+        android:layout_alignLeft="@+id/text_name"
+        android:layout_alignStart="@+id/text_name" />
+
+    <TextView
+        android:id="@+id/text_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/mem_contact"
+        android:layout_alignRight="@+id/text_contact"
+        android:layout_alignEnd="@+id/text_contact" />
+
+    <TextView
+        android:id="@+id/text_milan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Milan"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/text_address"
+        android:layout_alignStart="@+id/text_address" />
+
+    <TextView
+        android:id="@+id/text_khanda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Khanda"
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/text_milan"
+        android:layout_alignLeft="@+id/text_milan"
+        android:layout_alignStart="@+id/text_milan" />
+
+        <EditText
+            android:id="@+id/mem_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/text_contact"
+            android:layout_marginLeft="17dp"
+            android:layout_marginStart="17dp"
+            android:layout_toEndOf="@+id/text_contact"
+            android:layout_toRightOf="@+id/text_contact"
+            android:ems="10"
+            android:maxLength="20"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/mem_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/mem_name"
+            android:layout_alignStart="@+id/mem_name"
+            android:layout_below="@+id/mem_name"
+            android:layout_marginTop="15dp"
+            android:maxLength="10"
+            android:ems="10"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/mem_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/mem_contact"
+            android:layout_alignStart="@+id/mem_contact"
+            android:layout_alignTop="@+id/text_address"
+            android:maxLength="30"
+            android:ems="10"
+            android:inputType="textPostalAddress" />
+
+    <Spinner
+        android:id="@+id/mem_milan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/mem_address"
+        android:layout_alignStart="@+id/mem_address"
+        android:layout_alignTop="@+id/text_milan"
+        android:layout_alignRight="@+id/mem_address"
+        android:layout_alignEnd="@+id/mem_address" />
+
+    <Spinner
+        android:id="@+id/mem_khanda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/text_khanda"
+        android:layout_alignEnd="@+id/mem_milan"
+        android:layout_alignLeft="@+id/mem_milan"
+        android:layout_alignRight="@+id/mem_milan"
+        android:layout_alignStart="@+id/mem_milan" />
+
+    <Button
+        android:id="@+id/details_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="Save"
+        android:layout_below="@+id/text_khanda"
+        android:layout_toRightOf="@+id/text_milan"
+        android:layout_toEndOf="@+id/text_milan" />
+
+    <Button
+        android:id="@+id/details_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:layout_alignBaseline="@+id/details_save"
+        android:layout_alignBottom="@+id/details_save"
+        android:layout_alignRight="@+id/mem_khanda"
+        android:layout_alignEnd="@+id/mem_khanda"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp" />
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
