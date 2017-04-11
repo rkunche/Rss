@@ -19,9 +19,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Attendence"
-            android:label="@string/title_activity_attendence"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        android:name=".Attendence"
+        android:label="@string/title_activity_attendence"
+        android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".AddMember"
+            android:label="@string/title_activity_addmember"
+          ></activity>
     </application>
 
 </manifest>

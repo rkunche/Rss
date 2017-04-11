@@ -6,6 +6,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_attendence">Attendence</string>
+    <string name="title_activity_addmember">AddMember</string>
     <string-array name="milan_list">
         <item>Milan1</item>
         <item>Milan2</item>
