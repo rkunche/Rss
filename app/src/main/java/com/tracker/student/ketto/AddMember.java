@@ -9,8 +9,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.view.View.OnClickListener;
 
-import static com.tracker.student.ketto.R.id.details_reset;
-import static com.tracker.student.ketto.R.id.mem_name;
+import com.tracker.models.Member;
+
+//import static com.tracker.student.ketto.R.id.details_reset;
+//import static com.tracker.student.ketto.R.id.mem_name;
 
 public class AddMember extends AppCompatActivity {
     EditText ET1;
@@ -54,7 +56,20 @@ public class AddMember extends AppCompatActivity {
         save_memdet.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v1){
                 ET1=(EditText)findViewById(R.id.mem_name);
-                EditText Mem_Name=(EditText) ET1.getText();
+                String MemName=ET1.getText().toString().trim();
+                ET2=(EditText)findViewById(R.id.mem_contact);
+                String MemContact=ET2.getText().toString().trim();
+                ET3=(EditText)findViewById(R.id.mem_address);
+                String MemAddress=ET3.getText().toString().trim();
+                SP1=(Spinner)findViewById(R.id.mem_khanda);
+                String MemKhanda=SP1.getSelectedItem().toString().trim();
+                SP2=(Spinner)findViewById(R.id.mem_milan);
+                String MemMilan=SP2.getSelectedItem().toString().trim();
+                Member SaveMem=new Member();
+                SaveMem.setmContact(MemContact);
+                SaveMem.setmName(MemName);
+                SaveMem.setMeanen(MemMilan);
+                SaveMem.setmKhand(MemKhanda);
             }
         });
     }

@@ -6,6 +6,7 @@ import io.realm.RealmObject;
 public class Member extends RealmObject{
 
     private String mContact;
+    private String mAddress;
     private String mName;
     private String mKhand;
     private String meanen;
@@ -25,6 +26,8 @@ public class Member extends RealmObject{
     public void setmName(String mName) {
         this.mName = mName;
     }
+    public void setmAddress(String mAddress){this.mAddress=mAddress;}
+    public String getmAddress(){return mAddress;}
 
     public String getmKhand() {
         return mKhand;
