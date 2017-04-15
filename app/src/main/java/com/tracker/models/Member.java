@@ -9,7 +9,16 @@ public class Member extends RealmObject{
     private String mAddress;
     private String mName;
     private String mKhand;
-    private String meanen;
+    private String milan;
+    private String jointime;
+
+    public String getJointime() {
+        return jointime;
+    }
+
+    public void setJointime(String jointime) {
+        this.jointime = jointime;
+    }
 
     public String getmContact() {
         return mContact;
@@ -37,11 +46,11 @@ public class Member extends RealmObject{
         this.mKhand = mKhand;
     }
 
-    public String getMeanen() {
-        return meanen;
+    public String getMilan() {
+        return milan;
     }
 
-    public void setMeanen(String meanen) {
-        this.meanen = meanen;
+    public void setMilan(String milan) {
+        this.milan = milan;
     }
 }

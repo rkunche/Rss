@@ -25,7 +25,7 @@ public class CrudMember {
         Member rMemeber = mRealm.createObject(Member.class);
         rMemeber.setmName(member.getmName());
         rMemeber.setmContact(member.getmContact());
-        rMemeber.setMeanen(member.getMeanen());
+        rMemeber.setMilan(member.getMilan());
         rMemeber.setmKhand(member.getmKhand());
         mRealm.commitTransaction();
     }
@@ -39,6 +39,18 @@ public class CrudMember {
     public List<Member> getAllMembers() {
         RealmResults results = mRealm.where(Member.class).findAll();
         return results;
+    }
+
+    public List<Member> searchByMilanAndKhanda(String milan, String khanda,String date)
+    {
+        RealmResults<Member> realmResults = mRealm.where(Member.class)
+                .equalTo("milan", milan)
+                .or()
+                .equalTo("mKhand", khanda)
+                .or()
+                .equalTo("date",date)
+                .findAll();
+        return realmResults;
     }
 
 }

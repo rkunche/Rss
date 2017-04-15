@@ -1,46 +1,67 @@
 package com.tracker.student.ketto;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+
+
+import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
+import com.tracker.DateListener.DateListener;
 import com.tracker.adapter.AttendenceAdapter;
+import com.tracker.fragment.DateFragment;
 import com.tracker.models.Member;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class Attendence extends AppCompatActivity {
-    ListView listView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
+public class Attendence extends AppCompatActivity implements DateListener{
+
+    @BindView(R.id.listview_attendence) ListView listView;
+    @BindView(R.id.rss_spinner) Spinner spinner;
+    @BindView(R.id.rss_spinner_milan) Spinner millanSpinnere;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.time_setting)
+    TextView timeSetting;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendence);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        listView = (ListView) findViewById(R.id.listview_attendence);
-        Spinner spinner = (Spinner) findViewById(R.id.rss_spinner);
+        ButterKnife.bind(this);
         spinner.setOnItemSelectedListener(new SpinnerSelectionListener());
         AttendenceAdapter attendenceAdapter = new AttendenceAdapter(this, null);
         listView.setAdapter(attendenceAdapter);
         setSupportActionBar(toolbar);
+        refreshMilan();
+        refreshKhanda();
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(spinnerAdapter);
-        spinnerAdapter.add("value1");
-        spinnerAdapter.add("value2");
-        spinnerAdapter.add("value3");
-        spinnerAdapter.add("value4");
-        spinnerAdapter.add("value5");
-
-        spinnerAdapter.notifyDataSetChanged();
+        timeSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
 
     }
 
@@ -66,5 +87,44 @@ public class Attendence extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> parent) {
 
         }
+    }
+
+     void refreshMilan()
+      {
+          ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+          spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+          spinner.setAdapter(spinnerAdapter);
+          spinnerAdapter.add("value1");
+          spinnerAdapter.add("value2");
+          spinnerAdapter.add("value3");
+          spinnerAdapter.add("value4");
+          spinnerAdapter.add("value5");
+
+          spinnerAdapter.notifyDataSetChanged();
+      }
+
+    void refreshKhanda()
+    {
+        ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+        spinnerAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        millanSpinnere.setAdapter(spinnerAdapter2);
+        spinnerAdapter2.add("value1");
+        spinnerAdapter2.add("value2");
+        spinnerAdapter2.add("value3");
+        spinnerAdapter2.add("value4");
+        spinnerAdapter2.add("value5");
+
+        spinnerAdapter2.notifyDataSetChanged();
+    }
+
+    void showDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        DateFragment dialogFragment = new DateFragment ();
+        dialogFragment.show(fm,"hii");
+    }
+
+    @Override
+    public void onDateSet(String date) {
+        timeSetting.setText(date);
     }
 }
