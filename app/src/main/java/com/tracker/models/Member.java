@@ -10,6 +10,15 @@ public class Member extends RealmObject{
     private String mKhand;
     private String milan;
     private String jointime;
+    private String memberAddress;
+
+    public String getMemberAddress() {
+        return memberAddress;
+    }
+
+    public void setMemberAddress(String memberAddress) {
+        this.memberAddress = memberAddress;
+    }
 
     public String getJointime() {
         return jointime;

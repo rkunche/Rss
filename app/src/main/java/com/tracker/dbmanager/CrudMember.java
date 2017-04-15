@@ -4,6 +4,7 @@ package com.tracker.dbmanager;
 import android.content.Context;
 
 import com.tracker.models.Member;
+import com.tracker.student.ketto.MyApplication;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class CrudMember {
     private Realm mRealm;
 
     public CrudMember(Context context) {
-        mRealm = Realm.getInstance(context);
+        mRealm = Realm.getDefaultInstance();
     }
 
     public void addMember(Member member) {

@@ -10,6 +10,15 @@ public class AttendenceModel extends RealmObject{
     private String name;
     private  String milan;
     private String khand;
+    private boolean isPresent;
+
+    public boolean isPresent() {
+        return isPresent;
+    }
+
+    public void setPresent(boolean present) {
+        isPresent = present;
+    }
 
     public String getDate() {
         return date;
