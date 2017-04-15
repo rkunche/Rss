@@ -2,26 +2,75 @@ package com.tracker.student.ketto;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.tracker.models.Member;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+//import static com.tracker.student.ketto.R.id.details_reset;
+//import static com.tracker.student.ketto.R.id.mem_name;
 
 public class AddMember extends AppCompatActivity {
 
+    @BindView(R.id.mem_name)
+    EditText memName;
+    @BindView(R.id.mem_contact)
+    EditText memContact;
+    @BindView(R.id.mem_address)
+    EditText memAddress;
+    @BindView(R.id.mem_milan)
+    Spinner spinnerMilan;
+    @BindView(R.id.mem_khanda)
+    Spinner spinnerKhanda;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_member);
+        ButterKnife.bind(this);
         /* populating Milan Spinner */
-        Spinner Milan_Spinner = (Spinner) findViewById(R.id.mem_milan);
+
         ArrayAdapter<CharSequence> milan_adapter = ArrayAdapter.createFromResource(this,
-                R.array.milan_list,android.R.layout.simple_spinner_item);
+                R.array.milan_list, android.R.layout.simple_spinner_item);
         milan_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Milan_Spinner.setAdapter(milan_adapter);
+        spinnerMilan.setAdapter(milan_adapter);
         /* populating Khanda Spinner */
-        Spinner Khanda_Spinner = (Spinner) findViewById(R.id.mem_khanda);
+
         ArrayAdapter<CharSequence> khanda_adapter = ArrayAdapter.createFromResource(this,
-                R.array.khanda_list,android.R.layout.simple_spinner_item);
+                R.array.khanda_list, android.R.layout.simple_spinner_item);
         khanda_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Khanda_Spinner.setAdapter(khanda_adapter);
+        spinnerKhanda.setAdapter(khanda_adapter);
+        // Following lines will Reset Add Member Form Data
+        Button reset_memdet = (Button) findViewById(R.id.details_reset);
+        reset_memdet.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                memContact.setText("");
+                memAddress.setText("");
+                memName.setText("");
+                spinnerMilan.setSelection(0);
+                spinnerKhanda.setSelection(0);
+            }
+        });
+        Button save_memdet=(Button)findViewById(R.id.details_save);
+        save_memdet.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v1){
+                String memNameVal= memName.getText().toString().trim();
+                String memContactVal= memContact.getText().toString().trim();;
+                String memAddressVal= memAddress.getText().toString().trim();
+                String memKhandaVal= spinnerMilan.getSelectedItem().toString().trim();
+                String memMilanVal= spinnerKhanda.getSelectedItem().toString().trim();
+                Member saveMem=new Member();
+                saveMem.setmContact(memContactVal);
+                saveMem.setmName(memNameVal);
+                saveMem.setMilan(memMilanVal);
+                saveMem.setmKhand(memKhandaVal);
+            }
+        });
     }
+
 }

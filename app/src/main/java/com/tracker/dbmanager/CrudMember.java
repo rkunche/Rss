@@ -15,9 +15,16 @@ import io.realm.RealmResults;
 public class CrudMember {
     private Realm mRealm;
 
+<<<<<<< HEAD
     public CrudMember(Context context) {
         mRealm = Realm.getDefaultInstance();
+=======
+    private CrudMember(Context context) {
+        mRealm = Realm.getInstance(context);
+>>>>>>> origin/master
     }
+
+    public static CurdMember
 
     public void addMember(Member member) {
         mRealm.beginTransaction();
