@@ -17,15 +17,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.tracker.DateListener.DateListener;
 import com.tracker.adapter.AttendenceAdapter;
+import com.tracker.dbmanager.CrudMember;
 import com.tracker.fragment.DateFragment;
+import com.tracker.models.AttendenceModel;
 import com.tracker.models.Member;
 
 import java.util.ArrayList;
@@ -41,8 +45,10 @@ public class Attendence extends AppCompatActivity implements DateListener{
     @BindView(R.id.rss_spinner) Spinner spinner;
     @BindView(R.id.rss_spinner_milan) Spinner millanSpinnere;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.time_setting)
-    TextView timeSetting;
+    @BindView(R.id.time_setting) TextView timeSetting;
+    @BindView(R.id.save_action) Button saveAction;
+    @BindView(R.id.cancel_action) Button cancelAction;
+    AttendenceAdapter attendenceAdapter;
     FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +56,27 @@ public class Attendence extends AppCompatActivity implements DateListener{
         setContentView(R.layout.activity_attendence);
         ButterKnife.bind(this);
         spinner.setOnItemSelectedListener(new SpinnerSelectionListener());
-        AttendenceAdapter attendenceAdapter = new AttendenceAdapter(this, null);
-        listView.setAdapter(attendenceAdapter);
         setSupportActionBar(toolbar);
         refreshMilan();
         refreshKhanda();
+        getAttendence();
 
         timeSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialog();
+            }
+        });
+
+        saveAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(timeSetting.getText() == null)
+                {
+                    Toast.makeText(Attendence.this,"Select Date",Toast.LENGTH_LONG).show();
+                    return;
+                }
+             attendenceAdapter.onSaveClick(timeSetting.getText().toString());
             }
         });
 
@@ -70,16 +87,7 @@ public class Attendence extends AppCompatActivity implements DateListener{
         public void onItemSelected(AdapterView<?> parent, View view,
                                    int pos, long id) {
             Log.i("Selected item position ", "" + pos);
-            List<Member> members = new ArrayList<>();
-            for(int i=0;i<5;i++)
-            {
-                Member member = new Member();
-                member.setmContact("1234423434");
-                member.setmName("name "+pos);
-                member.setmKhand("khand"+pos);
-                members.add(member);
-            }
-
+            List<AttendenceModel> members = new ArrayList<>();
             AttendenceAdapter attendenceAdapter = new AttendenceAdapter(Attendence.this, members);
             listView.setAdapter(attendenceAdapter);
         }
@@ -126,5 +134,15 @@ public class Attendence extends AppCompatActivity implements DateListener{
     @Override
     public void onDateSet(String date) {
         timeSetting.setText(date);
+    }
+
+
+    private void getAttendence() {
+
+        String khanda = millanSpinnere.getSelectedItem().toString();
+        String milan = spinner.getSelectedItem().toString();
+        List<AttendenceModel> attendenceModels = CrudMember.getInstance().searchByMilanAndKhanda(khanda, milan, null);
+        final AttendenceAdapter attendenceAdapter = new AttendenceAdapter(this, attendenceModels);
+        listView.setAdapter(attendenceAdapter);
     }
 }

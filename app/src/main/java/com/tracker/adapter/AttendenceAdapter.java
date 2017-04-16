@@ -7,8 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.tracker.dbmanager.CrudMember;
+import com.tracker.models.AttendenceModel;
 import com.tracker.models.Member;
 import com.tracker.student.ketto.R;
 
@@ -17,13 +20,9 @@ import java.util.List;
 public class AttendenceAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
-    List<Member> memberList;
-    public AttendenceAdapter(Context context, List<Member> members)
+    List<AttendenceModel> memberList;
+    public AttendenceAdapter(Context context, List<AttendenceModel> members)
     {
-       //initial comment
-       //comment made by raju
-        //test commit1
-        //Comments insterted by Ravi
         this.context = context;
         this.memberList = members;
         inflater = LayoutInflater.from(context);
@@ -48,7 +47,7 @@ public class AttendenceAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewItemHolder viewItemHolder = null;
         if(view == null)
         {
@@ -60,8 +59,15 @@ public class AttendenceAdapter extends BaseAdapter {
             view.setTag(viewItemHolder);
         }
         viewItemHolder =(ViewItemHolder) view.getTag();
-        viewItemHolder.nameViewId.setText(memberList.get(i).getmName());
-        viewItemHolder.contactViewId.setText(memberList.get(i).getmContact());
+        viewItemHolder.nameViewId.setText(memberList.get(i).getName());
+        viewItemHolder.contactViewId.setText(memberList.get(i).getMilan());
+        viewItemHolder.checkBoxId.setChecked(memberList.get(i).isPresent());
+        viewItemHolder.checkBoxId.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                memberList.get(i).setPresent(b);
+            }
+        });
         return view;
     }
 
@@ -70,5 +76,11 @@ public class AttendenceAdapter extends BaseAdapter {
       TextView nameViewId;
       TextView contactViewId;
       CheckBox checkBoxId;
+    }
+
+    public void onSaveClick(String date)
+    {
+
+        CrudMember.getInstance().saveAttendence(memberList,date);
     }
 }

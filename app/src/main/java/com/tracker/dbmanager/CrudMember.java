@@ -4,6 +4,7 @@ package com.tracker.dbmanager;
 import android.content.Context;
 import android.util.Log;
 
+import com.tracker.models.AttendenceModel;
 import com.tracker.models.Member;
 
 import java.util.List;
@@ -52,16 +53,29 @@ public class CrudMember {
         return results;
     }
 
-    public List<Member> searchByMilanAndKhanda(String milan, String khanda,String date)
+    public List<AttendenceModel> searchByMilanAndKhanda(String milan, String khanda,String date)
     {
-        RealmResults<Member> realmResults = mRealm.where(Member.class)
+        RealmResults<AttendenceModel> realmResults = mRealm.where(AttendenceModel.class)
                 .equalTo("milan", milan)
                 .or()
                 .equalTo("mKhand", khanda)
-                .or()
-                .equalTo("date",date)
                 .findAll();
         return realmResults;
+    }
+
+    public void saveAttendence(List<AttendenceModel> attendenceModels,String date)
+    {
+        for(AttendenceModel attendenceModel : attendenceModels)
+        {
+            mRealm.beginTransaction();
+            AttendenceModel rMemeber = mRealm.createObject(AttendenceModel.class);
+            rMemeber.setName(rMemeber.getName());
+            rMemeber.setPresent(rMemeber.isPresent());
+            rMemeber.setMilan(rMemeber.getMilan());
+            rMemeber.setKhand(rMemeber.getKhand());
+            rMemeber.setDate(date);
+            mRealm.commitTransaction();
+        }
     }
 
 }
