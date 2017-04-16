@@ -2,16 +2,21 @@ package com.tracker.student.ketto;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.tracker.dbmanager.CrudMember;
 import com.tracker.models.Member;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 
 //import static com.tracker.student.ketto.R.id.details_reset;
 //import static com.tracker.student.ketto.R.id.mem_name;
@@ -59,6 +64,11 @@ public class AddMember extends AppCompatActivity {
         Button save_memdet=(Button)findViewById(R.id.details_save);
         save_memdet.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v1){
+                List<Member> members = CrudMember.getInstance().getAllMembers();
+                for(Member member : members)
+                {
+                    Log.i("member info", "Name "+member.getmName());
+                }
                 String memNameVal= memName.getText().toString().trim();
                 String memContactVal= memContact.getText().toString().trim();;
                 String memAddressVal= memAddress.getText().toString().trim();
@@ -67,8 +77,9 @@ public class AddMember extends AppCompatActivity {
                 Member saveMem=new Member();
                 saveMem.setmContact(memContactVal);
                 saveMem.setmName(memNameVal);
-                saveMem.setMeanen(memMilanVal);
+                saveMem.setMilan(memMilanVal);
                 saveMem.setmKhand(memKhandaVal);
+                CrudMember.getInstance().addMember(saveMem);
             }
         });
     }

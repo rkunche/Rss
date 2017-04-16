@@ -2,6 +2,7 @@ package com.tracker.dbmanager;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.tracker.models.Member;
 
@@ -13,14 +14,23 @@ import io.realm.RealmResults;
 
 public class CrudMember {
     private Realm mRealm;
-
-    private CrudMember(Context context) {
-        mRealm = Realm.getInstance(context);
+    private static CrudMember crudeMember;
+    private CrudMember() {
+        mRealm = Realm.getDefaultInstance();
     }
 
-    public static CurdMember
+    public static CrudMember getInstance()
+    {
+      if(crudeMember == null)
+      {
+          crudeMember = new CrudMember();
+      }
+        return crudeMember;
+
+    }
 
     public void addMember(Member member) {
+        Log.i("save meber srates","save started");
         mRealm.beginTransaction();
         Member rMemeber = mRealm.createObject(Member.class);
         rMemeber.setmName(member.getmName());
@@ -28,6 +38,7 @@ public class CrudMember {
         rMemeber.setMilan(member.getMilan());
         rMemeber.setmKhand(member.getmKhand());
         mRealm.commitTransaction();
+        Log.i("save meber srates","save successfully");
     }
 
     public Member getMember(String contactInfo) {
