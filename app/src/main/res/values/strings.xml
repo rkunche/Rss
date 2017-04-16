@@ -8,15 +8,18 @@
     <string name="title_activity_attendence">Attendence</string>
     <string name="title_activity_addmember">AddMember</string>
     <string-array name="milan_list">
-        <item>Milan1</item>
-        <item>Milan2</item>
-        <item>Milan3</item>
-        <item>Milan4</item>
-        <item>Milan5</item>
+        <item>Savarkar</item>
+        <item>Dayanand Saraswati</item>
+        <item>Ambedkar</item>
+        <item>RanaPratap</item>
+        <item>Vedavyas</item>
+        <item>JC Bose</item>
+        <item>Bhagatsingh</item>
+        <item>Nallagandla</item>
     </string-array>
     <string-array name="khanda_list">
-        <item>Khanda1</item>
-        <item>Khanda2</item>
+        <item>Meerapuram</item>
+        <item>Valay</item>
         <item>Khanda3</item>
         <item>Khanda4</item>
         <item>Khanda5</item>
