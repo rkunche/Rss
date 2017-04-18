@@ -54,13 +54,16 @@ public class AddMember extends AppCompatActivity {
         Button reset_memdet = (Button) findViewById(R.id.details_reset);
         reset_memdet.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                memContact.setText("");
-                memAddress.setText("");
-                memName.setText("");
-                spinnerMilan.setSelection(0);
-                spinnerKhanda.setSelection(0);
+               // memContact.setText("");
+                //memAddress.setText("");
+                //memName.setText("");
+                //spinnerMilan.setSelection(0);
+                //spinnerKhanda.setSelection(0);
+                reset_formdata();
+
             }
-        });
+
+            });
         Button save_memdet=(Button)findViewById(R.id.details_save);
         save_memdet.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v1){
@@ -79,9 +82,19 @@ public class AddMember extends AppCompatActivity {
                 saveMem.setmName(memNameVal);
                 saveMem.setMilan(memMilanVal);
                 saveMem.setmKhand(memKhandaVal);
+                saveMem.setmAddress(memAddressVal);
                 CrudMember.getInstance().addMember(saveMem);
+                reset_formdata();
             }
         });
+
     }
 
+    public void reset_formdata(){
+        memContact.setText("");
+        memAddress.setText("");
+        memName.setText("");
+        spinnerMilan.setSelection(0);
+        spinnerKhanda.setSelection(0);
+    }
 }
