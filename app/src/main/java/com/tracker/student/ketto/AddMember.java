@@ -1,5 +1,6 @@
 package com.tracker.student.ketto;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.tracker.dbmanager.CrudMember;
 import com.tracker.models.Member;
@@ -84,6 +86,10 @@ public class AddMember extends AppCompatActivity {
                 saveMem.setmKhand(memKhandaVal);
                 saveMem.setmAddress(memAddressVal);
                 CrudMember.getInstance().addMember(saveMem);
+                Context toast_context=getApplicationContext();
+                CharSequence toast_msg="Member Added Successfully";
+                int toast_dur= Toast.LENGTH_LONG;
+                Toast.makeText(toast_context,toast_msg,toast_dur).show();
                 reset_formdata();
             }
         });
