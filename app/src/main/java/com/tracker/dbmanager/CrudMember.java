@@ -11,7 +11,6 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
-
 public class CrudMember {
     private Realm mRealm;
     private static CrudMember crudeMember;

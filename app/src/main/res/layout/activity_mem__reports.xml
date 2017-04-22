@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tracker.student.ketto.Mem_Reports">
+
+    <RadioButton
+        android:id="@+id/Radio_Milan"
+        android:layout_width="80dp"
+        android:layout_height="31dp"
+        android:text="Milan"
+        app:layout_constraintRight_toLeftOf="@+id/Milan_spinner"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/Radio_Khanda"
+        android:layout_marginEnd="19dp"
+        android:layout_marginTop="42dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="42dp"
+        app:layout_constraintLeft_toLeftOf="@+id/Radio_Khanda"
+        app:layout_constraintTop_toTopOf="@+id/Radio_Khanda"
+        android:layout_marginRight="19dp"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintHorizontal_bias="0.0" />
+
+    <RadioButton
+        android:id="@+id/Radio_Khanda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Khanda"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="35dp" />
+
+    <RadioButton
+        android:id="@+id/Radio_Weekly"
+        android:layout_width="81dp"
+        android:layout_height="35dp"
+        android:text="Weekly"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="105dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/Radio_Milan"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="102dp"
+        android:layout_marginLeft="0dp" />
+
+    <RadioButton
+        android:id="@+id/Radio_Monthly"
+        android:layout_width="84dp"
+        android:layout_height="35dp"
+        android:text="Monthly"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/Report_Date"
+        android:layout_marginStart="24dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="17dp"
+        app:layout_constraintLeft_toRightOf="@+id/Radio_Weekly"
+        android:layout_marginLeft="24dp" />
+
+    <Spinner
+        android:id="@+id/Khanda_spinner"
+        android:layout_width="166dp"
+        android:layout_height="29dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/Milan_spinner"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="15dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="17dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/Radio_Khanda"
+        android:layout_marginLeft="26dp"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Spinner
+        android:id="@+id/Milan_spinner"
+        android:layout_width="164dp"
+        android:layout_height="31dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/Radio_Monthly"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintRight_toRightOf="@+id/Khanda_spinner"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="11dp"
+        app:layout_constraintTop_toTopOf="@+id/Radio_Milan"
+        android:layout_marginRight="1dp"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/Atten_Report"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <CalendarView
+        android:id="@+id/Report_Date"
+        android:layout_width="267dp"
+        android:layout_height="54dp"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="17dp"
+        app:layout_constraintTop_toBottomOf="@+id/Radio_Weekly"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/Radio_Weekly"
+        android:layout_marginLeft="24dp" />
+</android.support.constraint.ConstraintLayout>
