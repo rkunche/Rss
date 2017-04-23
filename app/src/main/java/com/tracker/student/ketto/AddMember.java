@@ -1,5 +1,6 @@
 package com.tracker.student.ketto;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.tracker.dbmanager.CrudMember;
 import com.tracker.models.Member;
@@ -54,13 +56,16 @@ public class AddMember extends AppCompatActivity {
         Button reset_memdet = (Button) findViewById(R.id.details_reset);
         reset_memdet.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                memContact.setText("");
-                memAddress.setText("");
-                memName.setText("");
-                spinnerMilan.setSelection(0);
-                spinnerKhanda.setSelection(0);
+               // memContact.setText("");
+                //memAddress.setText("");
+                //memName.setText("");
+                //spinnerMilan.setSelection(0);
+                //spinnerKhanda.setSelection(0);
+                reset_formdata();
+
             }
-        });
+
+            });
         Button save_memdet=(Button)findViewById(R.id.details_save);
         save_memdet.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v1){
@@ -79,9 +84,23 @@ public class AddMember extends AppCompatActivity {
                 saveMem.setmName(memNameVal);
                 saveMem.setMilan(memMilanVal);
                 saveMem.setmKhand(memKhandaVal);
+                saveMem.setmAddress(memAddressVal);
                 CrudMember.getInstance().addMember(saveMem);
+                Context toast_context=getApplicationContext();
+                CharSequence toast_msg="Member Added Successfully";
+                int toast_dur= Toast.LENGTH_LONG;
+                Toast.makeText(toast_context,toast_msg,toast_dur).show();
+                reset_formdata();
             }
         });
+
     }
 
+    public void reset_formdata(){
+        memContact.setText("");
+        memAddress.setText("");
+        memName.setText("");
+        spinnerMilan.setSelection(0);
+        spinnerKhanda.setSelection(0);
+    }
 }
