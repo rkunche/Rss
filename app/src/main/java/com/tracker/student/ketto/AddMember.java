@@ -1,5 +1,6 @@
 package com.tracker.student.ketto;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,8 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.tracker.dbmanager.CrudMember;
+import com.tracker.localmodels.LMemeber;
 import com.tracker.models.Member;
 
 import java.util.List;
@@ -54,34 +57,46 @@ public class AddMember extends AppCompatActivity {
         Button reset_memdet = (Button) findViewById(R.id.details_reset);
         reset_memdet.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                memContact.setText("");
-                memAddress.setText("");
-                memName.setText("");
-                spinnerMilan.setSelection(0);
-                spinnerKhanda.setSelection(0);
+                reset_formdata();
+
             }
-        });
+
+            });
         Button save_memdet=(Button)findViewById(R.id.details_save);
         save_memdet.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v1){
-                List<Member> members = CrudMember.getInstance().getAllMembers();
-                for(Member member : members)
+                List<LMemeber> members = CrudMember.getInstance().getAllMembers();
+                for(LMemeber member : members)
                 {
                     Log.i("member info", "Name "+member.getmName());
                 }
                 String memNameVal= memName.getText().toString().trim();
                 String memContactVal= memContact.getText().toString().trim();;
                 String memAddressVal= memAddress.getText().toString().trim();
-                String memKhandaVal= spinnerMilan.getSelectedItem().toString().trim();
-                String memMilanVal= spinnerKhanda.getSelectedItem().toString().trim();
+                String memMilanVal= spinnerMilan.getSelectedItem().toString().trim();
+                String memKhandaVal= spinnerKhanda.getSelectedItem().toString().trim();
                 Member saveMem=new Member();
                 saveMem.setmContact(memContactVal);
                 saveMem.setmName(memNameVal);
                 saveMem.setMilan(memMilanVal);
                 saveMem.setmKhand(memKhandaVal);
+                saveMem.setmAddress(memAddressVal);
                 CrudMember.getInstance().addMember(saveMem);
+                Context toast_context=getApplicationContext();
+                CharSequence toast_msg="Member Added Successfully";
+                int toast_dur= Toast.LENGTH_LONG;
+                Toast.makeText(toast_context,toast_msg,toast_dur).show();
+                reset_formdata();
             }
         });
+
     }
 
+    public void reset_formdata(){
+        memContact.setText("");
+        memAddress.setText("");
+        memName.setText("");
+        spinnerMilan.setSelection(0);
+        spinnerKhanda.setSelection(0);
+    }
 }
