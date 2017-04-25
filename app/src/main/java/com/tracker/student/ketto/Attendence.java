@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,8 +30,10 @@ import com.tracker.DateListener.DateListener;
 import com.tracker.adapter.AttendenceAdapter;
 import com.tracker.dbmanager.CrudMember;
 import com.tracker.fragment.DateFragment;
+import com.tracker.localmodels.LMemeber;
 import com.tracker.models.AttendenceModel;
 import com.tracker.models.Member;
+import com.tracker.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,17 +42,25 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class Attendence extends AppCompatActivity implements DateListener{
+public class Attendence extends AppCompatActivity implements DateListener {
 
-    @BindView(R.id.listview_attendence) ListView listView;
-    @BindView(R.id.rss_spinner) Spinner spinner;
-    @BindView(R.id.rss_spinner_milan) Spinner millanSpinnere;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.time_setting) TextView timeSetting;
-    @BindView(R.id.save_action) Button saveAction;
-    @BindView(R.id.cancel_action) Button cancelAction;
+    @BindView(R.id.listview_attendence)
+    ListView listView;
+    @BindView(R.id.rss_spinner)
+    Spinner spinner;
+    @BindView(R.id.rss_spinner_milan)
+    Spinner millanSpinnere;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.time_setting)
+    TextView timeSetting;
+    @BindView(R.id.save_action)
+    Button saveAction;
+    @BindView(R.id.cancel_action)
+    Button cancelAction;
     AttendenceAdapter attendenceAdapter;
     FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +70,6 @@ public class Attendence extends AppCompatActivity implements DateListener{
         setSupportActionBar(toolbar);
         refreshMilan();
         refreshKhanda();
-        getAttendence();
-
         timeSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,12 +80,11 @@ public class Attendence extends AppCompatActivity implements DateListener{
         saveAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(timeSetting.getText() == null)
-                {
-                    Toast.makeText(Attendence.this,"Select Date",Toast.LENGTH_LONG).show();
+                if (timeSetting.getText() == null) {
+                    Toast.makeText(Attendence.this, "Select Date", Toast.LENGTH_LONG).show();
                     return;
                 }
-             attendenceAdapter.onSaveClick(timeSetting.getText().toString());
+                attendenceAdapter.onSaveClick(null);
             }
         });
 
@@ -87,9 +95,6 @@ public class Attendence extends AppCompatActivity implements DateListener{
         public void onItemSelected(AdapterView<?> parent, View view,
                                    int pos, long id) {
             Log.i("Selected item position ", "" + pos);
-            List<AttendenceModel> members = new ArrayList<>();
-            AttendenceAdapter attendenceAdapter = new AttendenceAdapter(Attendence.this, members);
-            listView.setAdapter(attendenceAdapter);
         }
 
         public void onNothingSelected(AdapterView<?> parent) {
@@ -97,43 +102,33 @@ public class Attendence extends AppCompatActivity implements DateListener{
         }
     }
 
-     void refreshMilan()
-      {
-          ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
-          spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-          spinner.setAdapter(spinnerAdapter);
-          spinnerAdapter.add("value1");
-          spinnerAdapter.add("value2");
-          spinnerAdapter.add("value3");
-          spinnerAdapter.add("value4");
-          spinnerAdapter.add("value5");
+    void refreshMilan() {
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-          spinnerAdapter.notifyDataSetChanged();
-      }
+        ArrayAdapter<CharSequence> milan_adapter = ArrayAdapter.createFromResource(this,
+                R.array.milan_list, android.R.layout.simple_spinner_item);
+        milan_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(milan_adapter);
+    }
 
-    void refreshKhanda()
-    {
-        ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+    void refreshKhanda() {
+        ArrayAdapter<CharSequence> spinnerAdapter2 = ArrayAdapter.createFromResource(this,
+                R.array.khanda_list, android.R.layout.simple_spinner_item);
         spinnerAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         millanSpinnere.setAdapter(spinnerAdapter2);
-        spinnerAdapter2.add("value1");
-        spinnerAdapter2.add("value2");
-        spinnerAdapter2.add("value3");
-        spinnerAdapter2.add("value4");
-        spinnerAdapter2.add("value5");
-
-        spinnerAdapter2.notifyDataSetChanged();
     }
 
     void showDialog() {
         FragmentManager fm = getSupportFragmentManager();
-        DateFragment dialogFragment = new DateFragment ();
-        dialogFragment.show(fm,"hii");
+        DateFragment dialogFragment = new DateFragment();
+        dialogFragment.show(fm, "hii");
     }
 
     @Override
     public void onDateSet(String date) {
-        timeSetting.setText(date);
+        timeSetting.setText(DateUtils.getDateKey());
+        getAttendence();
     }
 
 
@@ -141,8 +136,9 @@ public class Attendence extends AppCompatActivity implements DateListener{
 
         String khanda = millanSpinnere.getSelectedItem().toString();
         String milan = spinner.getSelectedItem().toString();
-        List<AttendenceModel> attendenceModels = CrudMember.getInstance().searchByMilanAndKhanda(khanda, milan, null);
-        final AttendenceAdapter attendenceAdapter = new AttendenceAdapter(this, attendenceModels);
+        List<LMemeber> memberList = CrudMember.getInstance().getAllMembers(milan, khanda);
+        CrudMember.getInstance().getAllAttendence();
+        attendenceAdapter = new AttendenceAdapter(this, memberList);
         listView.setAdapter(attendenceAdapter);
     }
 }

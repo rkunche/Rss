@@ -2,6 +2,7 @@ package com.tracker.adapter;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +10,31 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tracker.dbmanager.CrudMember;
+import com.tracker.localmodels.LAttendenceModel;
+import com.tracker.localmodels.LMemeber;
 import com.tracker.models.AttendenceModel;
+import com.tracker.models.DateMap;
 import com.tracker.models.Member;
+import com.tracker.student.ketto.Attendence;
 import com.tracker.student.ketto.R;
+import com.tracker.utils.DateUtils;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmList;
 
 public class AttendenceAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
-    List<AttendenceModel> memberList;
-    public AttendenceAdapter(Context context, List<AttendenceModel> members)
+    List<LMemeber> memberList;
+    public AttendenceAdapter(Context context, List<LMemeber> members)
     {
         this.context = context;
         this.memberList = members;
@@ -59,13 +72,29 @@ public class AttendenceAdapter extends BaseAdapter {
             view.setTag(viewItemHolder);
         }
         viewItemHolder =(ViewItemHolder) view.getTag();
-        viewItemHolder.nameViewId.setText(memberList.get(i).getName());
-        viewItemHolder.contactViewId.setText(memberList.get(i).getMilan());
-        viewItemHolder.checkBoxId.setChecked(memberList.get(i).isPresent());
+        viewItemHolder.nameViewId.setText(memberList.get(i).getmName());
+        viewItemHolder.contactViewId.setText(memberList.get(i).getmContact());
+
+        viewItemHolder.checkBoxId.setChecked(memberList.get(i).isPresentStatus());
         viewItemHolder.checkBoxId.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                memberList.get(i).setPresent(b);
+               // memberList.get(i).setPresentStatus(b);
+                LMemeber memeber = memberList.get(i);
+                LAttendenceModel attendenceModel = new LAttendenceModel();
+                LAttendenceModel lAttendenceModel = attendenceModel.getAttendenceModel(memeber);
+                lAttendenceModel.setPresent(b);
+
+                Calendar calendar = Calendar.getInstance();
+                int date = calendar.get(Calendar.DATE);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                lAttendenceModel.setMonth(month);
+                lAttendenceModel.setYear(year);
+                lAttendenceModel.setWeek(date);
+                Log.i("saving status", "saving status& "+b);
+                Log.i("saving status", "saving status& "+lAttendenceModel.getId());
+                CrudMember.getInstance().saveAttendance(lAttendenceModel);
             }
         });
         return view;
@@ -78,9 +107,13 @@ public class AttendenceAdapter extends BaseAdapter {
       CheckBox checkBoxId;
     }
 
-    public void onSaveClick(String date)
+    public void onSaveClick(Date date)
     {
-
-        CrudMember.getInstance().saveAttendence(memberList,date);
+        memberList.clear();
+        notifyDataSetChanged();
+        Toast.makeText(context,"Saved",Toast.LENGTH_LONG).show();
     }
+
+
+
 }
