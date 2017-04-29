@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
@@ -21,11 +22,11 @@ public class Mem_Reports extends AppCompatActivity {
     @BindView(R.id.radio_Weekly)
     RadioButton radioWeekly;
     @BindView(R.id.radio_Monthly)
-    RadioButton getRadioMonthly;
+    RadioButton radioMonthly;
     @BindView(R.id.radio_MKGroup)
     RadioGroup radioMKGroup;
     @BindView(R.id.Attendence_Report)
-    ScrollView attendanceReport;
+    ListView attendanceReport;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
