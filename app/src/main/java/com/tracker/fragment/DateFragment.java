@@ -13,13 +13,13 @@ import android.widget.DatePicker;
 import com.tracker.DateListener.DateListener;
 
 import java.util.Calendar;
-
+import java.util.Date;
 
 
 public class DateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-   Context activity;
-    public DateFragment()
-    {
+    Context activity;
+
+    public DateFragment() {
 
     }
 
@@ -44,8 +44,15 @@ public class DateFragment extends DialogFragment implements DatePickerDialog.OnD
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
         String date = "" + year + "_" + month + "_" + day;
-        DateListener dateListener = (DateListener)activity;
-        dateListener.onDateSet(date);
+        DateListener dateListener = (DateListener) activity;
+        // dateListener.onDateSet(date);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+
+        Date dateObj = calendar.getTime();
+        Log.i("date obejct", " Date object " + dateObj);
+        dateListener.onDateSet(date.toString());
         //Log.i("Time", "Time" + date);
     }
 }

@@ -1,21 +1,39 @@
 package com.tracker.models;
 
-import io.realm.RealmObject;
+import java.util.Date;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 
 public class AttendenceModel extends RealmObject{
 
-    private String date;
+    @PrimaryKey
+    private String id;//date+id comobo
+    private Date date;
     private String name;
     private  String milan;
     private String khand;
+    private boolean isPresent;
 
-    public String getDate() {
+    private int year;
+    private int month;
+
+    private int week;
+
+    public boolean isPresent() {
+        return isPresent;
+    }
+
+    public void setPresent(boolean present) {
+        isPresent = present;
+    }
+
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -42,4 +60,36 @@ public class AttendenceModel extends RealmObject{
     public void setKhand(String khand) {
         this.khand = khand;
     }
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getWeek() {
+        return week;
+    }
+
+    public void setWeek(int week) {
+        this.week = week;
+    }
+
 }
