@@ -10,7 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-
+import com.tracker.models.Attendence_Reports;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -63,6 +63,10 @@ public class Mem_Reports extends AppCompatActivity {
         int radioId=radioMKGroup.getCheckedRadioButtonId();
         RadioButton selctedButton=(RadioButton)findViewById(radioId);
         String radioText=selctedButton.getText().toString();
+        Attendence_Reports Areport=new Attendence_Reports();
+        Areport.setKhand(khandaVal);
+        Areport.setMilan(milanVal);
+        Areport.setWeekormonth(radioText);
 
     }
 
