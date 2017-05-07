@@ -232,9 +232,9 @@ public class CrudMember {
             Log.i("attenceModel","AttendenceModel "+attendenceModel.getId());
         }
     }
-    public void getAttendenceReport(){
+    public List getAttendenceReport(){
         Attendence_Reports Areport=new Attendence_Reports();
-        ArrayList<Attendence_Reports> weekreport=new ArrayList<Attendence_Reports>();
+        List weekreport=new ArrayList();
         String MilanVal=Areport.getMilan();
         String KhandaVal=Areport.getKhand();
         String worm=Areport.getWeekormonth();
@@ -254,14 +254,18 @@ public class CrudMember {
                     .equalTo("month",CurMon)
                     .or()
                     .equalTo("week",i)
+                    .or()
+                    .equalTo("isPresent",true)
                     .findAll();
-            realmResults.size();}
-            return;
-        }
+
+                weekreport.add(realmResults.size());
+            }
+            }
         else
         {
 
         }
+        return weekreport;
     }
 
 }

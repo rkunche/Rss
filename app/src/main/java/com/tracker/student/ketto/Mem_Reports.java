@@ -10,10 +10,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+
+import com.tracker.dbmanager.CrudMember;
 import com.tracker.models.Attendence_Reports;
+
+import java.util.ArrayList;
+import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+import com.tracker.dbmanager.CrudMember;
 public class Mem_Reports extends AppCompatActivity {
     @BindView(R.id.spinner_Milan)
     Spinner spinnerMilan;
@@ -57,6 +62,7 @@ public class Mem_Reports extends AppCompatActivity {
         spinnerKhanda.setAdapter(adapterKhanda);
 
     }
+
     public void getReport(){
         String milanVal=spinnerMilan.getSelectedItem().toString().trim();
         String khandaVal=spinnerKhanda.getSelectedItem().toString().trim();
@@ -67,6 +73,8 @@ public class Mem_Reports extends AppCompatActivity {
         Areport.setKhand(khandaVal);
         Areport.setMilan(milanVal);
         Areport.setWeekormonth(radioText);
+        List attenReport=new ArrayList();
+        attenReport= CrudMember.getInstance().getAttendenceReport();
 
     }
 
