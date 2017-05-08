@@ -238,6 +238,9 @@ public class CrudMember {
         String MilanVal=Areport.getMilan();
         String KhandaVal=Areport.getKhand();
         String worm=Areport.getWeekormonth();
+        Log.i("MilanVal","MilanVal"+MilanVal);
+        Log.i("KhandaVal","MilanVal"+KhandaVal);
+        Log.i("Worm","MilanVal"+worm);
         /* Case-1 User Choose Weekly Report-
            Case-1.1 User can select a Khanda and want to display attendence of all Milans under it
            Case-1.2 User can select a Khanda and a Milan to display attendence of a particular milan
@@ -262,7 +265,7 @@ public class CrudMember {
             }
             }
         else
-        {
+          {
 
         }
         return weekreport;

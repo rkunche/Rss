@@ -2,6 +2,7 @@ package com.tracker.student.ketto;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.tracker.dbmanager.CrudMember;
 import com.tracker.models.Attendence_Reports;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,13 +71,20 @@ public class Mem_Reports extends AppCompatActivity {
         int radioId=radioMKGroup.getCheckedRadioButtonId();
         RadioButton selctedButton=(RadioButton)findViewById(radioId);
         String radioText=selctedButton.getText().toString();
+        Log.i("MilanVal","MilanVal"+milanVal);
+        Log.i("KhandaVal","MilanVal"+khandaVal);
+        Log.i("Worm","MilanVal"+radioText);
         Attendence_Reports Areport=new Attendence_Reports();
         Areport.setKhand(khandaVal);
         Areport.setMilan(milanVal);
         Areport.setWeekormonth(radioText);
         List attenReport=new ArrayList();
+        Iterator i1=attenReport.iterator();
+        while(i1.hasNext()){
+            Log.i("counts","counts"+i1.next());}
         attenReport= CrudMember.getInstance().getAttendenceReport();
-
+        ArrayAdapter AttendenceAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,attenReport);
+        attendanceReport.setAdapter(AttendenceAdapter);
     }
 
 }

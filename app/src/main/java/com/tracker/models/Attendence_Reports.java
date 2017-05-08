@@ -14,19 +14,18 @@ public class Attendence_Reports extends RealmObject{
     public String getMilan() {
         return milan;
     }
-
     public void setMilan(String milan) {
-        this.milan = milan;
+        milan = this.milan;
     }
 
     public String getKhand() {
         return khand;
     }
-
     public void setKhand(String khand) {
-        this.khand = khand;
+        khand = this.khand;
     }
-    public void setWeekormonth(String weekormonth){this.weekormonth=weekormonth;}
+
+    public void setWeekormonth(String weekormonth){weekormonth=this.weekormonth;}
 
     public String getWeekormonth(){return weekormonth;}
 
