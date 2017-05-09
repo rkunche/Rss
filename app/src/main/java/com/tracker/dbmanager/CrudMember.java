@@ -232,8 +232,8 @@ public class CrudMember {
             Log.i("attenceModel","AttendenceModel "+attendenceModel.getId());
         }
     }
-    public List getAttendenceReport(){
-        Attendence_Reports Areport=new Attendence_Reports();
+    public List getAttendenceReport(Attendence_Reports Areport){
+
         List weekreport=new ArrayList();
         String MilanVal=Areport.getMilan();
         String KhandaVal=Areport.getKhand();
@@ -260,7 +260,7 @@ public class CrudMember {
                     .or()
                     .equalTo("isPresent",true)
                     .findAll();
-
+                Log.i("from database","MilanVal"+realmResults);
                 weekreport.add(realmResults.size());
             }
             }
