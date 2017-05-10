@@ -234,13 +234,10 @@ public class CrudMember {
     }
     public List getAttendenceReport(Attendence_Reports Areport){
 
-        List weekreport=new ArrayList();
+        List Atten_Report=new ArrayList();
         String MilanVal=Areport.getMilan();
         String KhandaVal=Areport.getKhand();
         String worm=Areport.getWeekormonth();
-        Log.i("MilanVal","MilanVal"+MilanVal);
-        Log.i("KhandaVal","MilanVal"+KhandaVal);
-        Log.i("Worm","MilanVal"+worm);
         /* Case-1 User Choose Weekly Report-
            Case-1.1 User can select a Khanda and want to display attendence of all Milans under it
            Case-1.2 User can select a Khanda and a Milan to display attendence of a particular milan
@@ -260,15 +257,27 @@ public class CrudMember {
                     .or()
                     .equalTo("isPresent",true)
                     .findAll();
-                Log.i("from database","MilanVal"+realmResults);
-                weekreport.add(realmResults.size());
+                Log.i("from database","From database"+realmResults.size());
+                Atten_Report.add(realmResults.size());
             }
             }
         else
           {
-
+              for (int i=1;i<=12;i++){
+                  RealmResults<AttendenceModel> realmResults = mRealm.where(AttendenceModel.class)
+                          .equalTo("milan", MilanVal)
+                          .or()
+                          .equalTo("khand", KhandaVal)
+                          .or()
+                          .equalTo("month",i)
+                          .or()
+                          .equalTo("isPresent",true)
+                          .findAll();
+                  Log.i("from database","From database"+realmResults.size());
+                  Atten_Report.add(realmResults.size());
+              }
         }
-        return weekreport;
+        return Atten_Report;
     }
 
 }

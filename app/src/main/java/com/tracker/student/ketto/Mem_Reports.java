@@ -79,9 +79,9 @@ public class Mem_Reports extends AppCompatActivity {
         Areport.setMilan(milanVal);
         Areport.setWeekormonth(radioText);
         List attenReport=new ArrayList();
-        Iterator i1=attenReport.iterator();
-        while(i1.hasNext()){
-            Log.i("counts","counts"+i1.next());}
+        //Iterator i1=attenReport.iterator();
+        //while(i1.hasNext()){
+        //    Log.i("counts","counts"+i1.next());}
         attenReport= CrudMember.getInstance().getAttendenceReport(Areport);
         ArrayAdapter AttendenceAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,attenReport);
         attendanceReport.setAdapter(AttendenceAdapter);
