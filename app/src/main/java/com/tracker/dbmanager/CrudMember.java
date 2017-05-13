@@ -49,11 +49,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import java.text.DateFormatSymbols;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
@@ -238,6 +240,12 @@ public class CrudMember {
         String MilanVal=Areport.getMilan();
         String KhandaVal=Areport.getKhand();
         String worm=Areport.getWeekormonth();
+        String final_string;
+        int present_count;
+        int absent_count;
+        String[] months_list=new DateFormatSymbols().getMonths();
+        List<String> week_list= Arrays.asList("Week-1","Week-2","Week-3","Week-4");
+
         /* Case-1 User Choose Weekly Report-
            Case-1.1 User can select a Khanda and want to display attendence of all Milans under it
            Case-1.2 User can select a Khanda and a Milan to display attendence of a particular milan
@@ -246,7 +254,7 @@ public class CrudMember {
             Calendar CalIns=Calendar.getInstance();
             int CurMon=CalIns.get(Calendar.MONTH)+1;
             for (int i=1;i<=4;i++){
-            RealmResults<AttendenceModel> realmResults = mRealm.where(AttendenceModel.class)
+            RealmResults<AttendenceModel> realmResults_P = mRealm.where(AttendenceModel.class)
                     .equalTo("milan", MilanVal)
                     .or()
                     .equalTo("khand", KhandaVal)
@@ -257,8 +265,22 @@ public class CrudMember {
                     .or()
                     .equalTo("isPresent",true)
                     .findAll();
-                Log.i("from database","From database"+realmResults.size());
-                Atten_Report.add(realmResults.size());
+                Log.i("from database","From database"+realmResults_P.size());
+                present_count=realmResults_P.size();
+                RealmResults<AttendenceModel> realmResults_A = mRealm.where(AttendenceModel.class)
+                        .equalTo("milan", MilanVal)
+                        .or()
+                        .equalTo("khand", KhandaVal)
+                        .or()
+                        .equalTo("month",CurMon)
+                        .or()
+                        .equalTo("week",i)
+                        .or()
+                        .equalTo("isPresent",false)
+                        .findAll();
+                absent_count=realmResults_A.size();
+                final_string=week_list.get(i-1)+"  "+"Present Count:"+present_count+" "+"Absent Count:"+absent_count;
+                Atten_Report.add(final_string);
             }
             }
         else
