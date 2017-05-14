@@ -1,8 +1,37 @@
 package com.tracker.dbmanager;
 
 
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.IntentSender;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.database.DatabaseErrorHandler;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.UserHandle;
+import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
+import android.support.annotation.StringDef;
+import android.support.annotation.StyleRes;
 import android.util.Log;
+import android.view.Display;
 
 import com.tracker.localmodels.LAttendenceModel;
 import com.tracker.localmodels.LMemeber;
@@ -10,16 +39,26 @@ import com.tracker.models.AttendenceModel;
 import com.tracker.models.DateMap;
 import com.tracker.models.Member;
 import com.tracker.student.ketto.MyApplication;
+import com.tracker.student.ketto.R;
 import com.tracker.utils.DateUtils;
+import com.tracker.models.Attendence_Reports;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import java.text.DateFormatSymbols;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
-
 public class CrudMember {
     private Realm mRealm;
     private static CrudMember crudeMember;
@@ -195,6 +234,73 @@ public class CrudMember {
         {
             Log.i("attenceModel","AttendenceModel "+attendenceModel.getId());
         }
+    }
+    public List getAttendenceReport(Attendence_Reports Areport){
+
+        List Atten_Report=new ArrayList();
+        String MilanVal=Areport.getMilan();
+        String KhandaVal=Areport.getKhand();
+        String worm=Areport.getWeekormonth();
+        String final_string;
+        int present_count;
+        int absent_count;
+        String[] months_list=new DateFormatSymbols().getMonths();
+        List<String> week_list= Arrays.asList("Week-1","Week-2","Week-3","Week-4");
+
+        /* Case-1 User Choose Weekly Report-
+           Case-1.1 User can select a Khanda and want to display attendence of all Milans under it
+           Case-1.2 User can select a Khanda and a Milan to display attendence of a particular milan
+         */
+        if (worm.equals("Weekly")){
+            Calendar CalIns=Calendar.getInstance();
+            int CurMon=CalIns.get(Calendar.MONTH)+1;
+            for (int i=1;i<=4;i++){
+            RealmResults<AttendenceModel> realmResults_P = mRealm.where(AttendenceModel.class)
+                    .equalTo("milan", MilanVal)
+                    .or()
+                    .equalTo("khand", KhandaVal)
+                    .or()
+                    .equalTo("month",CurMon)
+                    .or()
+                    .equalTo("week",i)
+                    .or()
+                    .equalTo("isPresent",true)
+                    .findAll();
+                Log.i("from database","From database"+realmResults_P.size());
+                present_count=realmResults_P.size();
+                RealmResults<AttendenceModel> realmResults_A = mRealm.where(AttendenceModel.class)
+                        .equalTo("milan", MilanVal)
+                        .or()
+                        .equalTo("khand", KhandaVal)
+                        .or()
+                        .equalTo("month",CurMon)
+                        .or()
+                        .equalTo("week",i)
+                        .or()
+                        .equalTo("isPresent",false)
+                        .findAll();
+                absent_count=realmResults_A.size();
+                final_string=week_list.get(i-1)+"  "+"Present Count:"+present_count+" "+"Absent Count:"+absent_count;
+                Atten_Report.add(final_string);
+            }
+            }
+        else
+          {
+              for (int i=1;i<=12;i++){
+                  RealmResults<AttendenceModel> realmResults = mRealm.where(AttendenceModel.class)
+                          .equalTo("milan", MilanVal)
+                          .or()
+                          .equalTo("khand", KhandaVal)
+                          .or()
+                          .equalTo("month",i)
+                          .or()
+                          .equalTo("isPresent",true)
+                          .findAll();
+                  Log.i("from database","From database"+realmResults.size());
+                  Atten_Report.add(realmResults.size());
+              }
+        }
+        return Atten_Report;
     }
 
 }
