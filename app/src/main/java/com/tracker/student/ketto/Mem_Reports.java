@@ -12,7 +12,9 @@ import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
+import com.tracker.adapter.ReportAdapter;
 import com.tracker.dbmanager.CrudMember;
+import com.tracker.localmodels.ReportResult;
 import com.tracker.models.Attendence_Reports;
 
 import java.util.ArrayList;
@@ -78,13 +80,9 @@ public class Mem_Reports extends AppCompatActivity {
         Areport.setKhand(khandaVal);
         Areport.setMilan(milanVal);
         Areport.setWeekormonth(radioText);
-        List attenReport=new ArrayList();
-        //Iterator i1=attenReport.iterator();
-        //while(i1.hasNext()){
-        //    Log.i("counts","counts"+i1.next());}
-        attenReport= CrudMember.getInstance().getAttendenceReport(Areport);
-        ArrayAdapter AttendenceAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,attenReport);
-        attendanceReport.setAdapter(AttendenceAdapter);
+        ReportResult attenReportObj = CrudMember.getInstance().getAttendenceReport(Areport);
+        ReportAdapter reportAdapter = new ReportAdapter(this,attenReportObj,radioText);
+        attendanceReport.setAdapter(reportAdapter);
     }
 
 }

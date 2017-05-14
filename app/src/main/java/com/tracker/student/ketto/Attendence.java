@@ -127,7 +127,7 @@ public class Attendence extends AppCompatActivity implements DateListener {
 
     @Override
     public void onDateSet(String date) {
-        timeSetting.setText(DateUtils.getDateKey());
+        timeSetting.setText(date);
         getAttendence();
     }
 

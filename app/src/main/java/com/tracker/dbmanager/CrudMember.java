@@ -35,6 +35,7 @@ import android.view.Display;
 
 import com.tracker.localmodels.LAttendenceModel;
 import com.tracker.localmodels.LMemeber;
+import com.tracker.localmodels.ReportResult;
 import com.tracker.models.AttendenceModel;
 import com.tracker.models.DateMap;
 import com.tracker.models.Member;
@@ -54,10 +55,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.text.DateFormatSymbols;
+import java.util.Map;
+
 import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 public class CrudMember {
     private Realm mRealm;
@@ -131,6 +136,9 @@ public class CrudMember {
             attendenceModel1.setName(obj.getName());
             attendenceModel1.setPresent(obj.isPresent());
             attendenceModel1.setKhand(obj.getKhand());
+            attendenceModel1.setWeek(obj.getWeek());
+            attendenceModel1.setMilan(obj.getMilan());
+            attendenceModel1.setMonth(obj.getMonth());
             mRealm.copyToRealmOrUpdate(attendenceModel1);
             mRealm.commitTransaction();
         }catch (Exception e)
@@ -235,72 +243,55 @@ public class CrudMember {
             Log.i("attenceModel","AttendenceModel "+attendenceModel.getId());
         }
     }
-    public List getAttendenceReport(Attendence_Reports Areport){
 
-        List Atten_Report=new ArrayList();
-        String MilanVal=Areport.getMilan();
-        String KhandaVal=Areport.getKhand();
-        String worm=Areport.getWeekormonth();
-        String final_string;
-        int present_count;
-        int absent_count;
-        String[] months_list=new DateFormatSymbols().getMonths();
-        List<String> week_list= Arrays.asList("Week-1","Week-2","Week-3","Week-4");
+    public ReportResult getAttendenceReport(Attendence_Reports Areport) {
+        String milanVal = Areport.getMilan();
+        String khandaVal = Areport.getKhand();
+        String worm = Areport.getWeekormonth();
+        ReportResult reportResult = new ReportResult();
+        Map<Integer, Integer> countMap = new HashMap<>();
 
-        /* Case-1 User Choose Weekly Report-
-           Case-1.1 User can select a Khanda and want to display attendence of all Milans under it
-           Case-1.2 User can select a Khanda and a Milan to display attendence of a particular milan
-         */
-        if (worm.equals("Weekly")){
-            Calendar CalIns=Calendar.getInstance();
-            int CurMon=CalIns.get(Calendar.MONTH)+1;
-            for (int i=1;i<=4;i++){
-            RealmResults<AttendenceModel> realmResults_P = mRealm.where(AttendenceModel.class)
-                    .equalTo("milan", MilanVal)
-                    .or()
-                    .equalTo("khand", KhandaVal)
-                    .or()
-                    .equalTo("month",CurMon)
-                    .or()
-                    .equalTo("week",i)
-                    .or()
-                    .equalTo("isPresent",true)
-                    .findAll();
-                Log.i("from database","From database"+realmResults_P.size());
-                present_count=realmResults_P.size();
-                RealmResults<AttendenceModel> realmResults_A = mRealm.where(AttendenceModel.class)
-                        .equalTo("milan", MilanVal)
-                        .or()
-                        .equalTo("khand", KhandaVal)
-                        .or()
-                        .equalTo("month",CurMon)
-                        .or()
-                        .equalTo("week",i)
-                        .or()
-                        .equalTo("isPresent",false)
-                        .findAll();
-                absent_count=realmResults_A.size();
-                final_string=week_list.get(i-1)+"  "+"Present Count:"+present_count+" "+"Absent Count:"+absent_count;
-                Atten_Report.add(final_string);
+        if (worm.equals("Weekly")) {
+            Calendar CalIns = Calendar.getInstance();
+            int CurMon = CalIns.get(Calendar.MONTH) + 1;
+            for (int i = 1; i <= 4; i++) {
+                RealmQuery<AttendenceModel> realmResults_P = mRealm.where(AttendenceModel.class);
+
+                realmResults_P.beginGroup();
+                realmResults_P.equalTo("khand", khandaVal);
+                realmResults_P.equalTo("milan", milanVal);
+                realmResults_P.equalTo("week", i);
+                realmResults_P.equalTo("isPresent", true);
+                realmResults_P.endGroup();
+                RealmResults<AttendenceModel> result = realmResults_P.findAll();
+                countMap.put(i, result.size());
+                Log.i("size ", "Realm result size is " + result.size());
             }
+        } else {
+            for (int i = 1; i <= 12; i++) {
+                RealmQuery<AttendenceModel> realmResults_P = mRealm.where(AttendenceModel.class);
+
+                realmResults_P.beginGroup();
+                realmResults_P.equalTo("khand", khandaVal);
+                realmResults_P.equalTo("milan", milanVal);
+                realmResults_P.equalTo("month", i);
+                realmResults_P.equalTo("isPresent", true);
+                realmResults_P.endGroup();
+                RealmResults<AttendenceModel> result = realmResults_P.findAll();
+                countMap.put(i, result.size());
             }
-        else
-          {
-              for (int i=1;i<=12;i++){
-                  RealmResults<AttendenceModel> realmResults = mRealm.where(AttendenceModel.class)
-                          .equalTo("milan", MilanVal)
-                          .or()
-                          .equalTo("khand", KhandaVal)
-                          .or()
-                          .equalTo("month",i)
-                          .or()
-                          .equalTo("isPresent",true)
-                          .findAll();
-                  Log.i("from database","From database"+realmResults.size());
-                  Atten_Report.add(realmResults.size());
-              }
         }
-        return Atten_Report;
+
+        RealmQuery<Member> totalCountQuery = mRealm.where(Member.class);
+
+        totalCountQuery.beginGroup();
+        totalCountQuery.equalTo("mKhand", khandaVal);
+        totalCountQuery.equalTo("milan", milanVal);
+        totalCountQuery.endGroup();
+        RealmResults<Member> result = totalCountQuery.findAll();
+        reportResult.totalCount = result.size();
+        reportResult.countMap = countMap;
+        return reportResult;
     }
 
 }
