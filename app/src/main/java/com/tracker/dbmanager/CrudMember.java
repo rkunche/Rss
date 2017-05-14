@@ -144,6 +144,7 @@ public class CrudMember {
         LMemeber lMemeber = new LMemeber();
         for (Member member : realmResults) {
             AttendenceModel attendenceModel =   mRealm.where(AttendenceModel.class).equalTo("id",DateUtils.getDateKey()+member.getmContact()).findFirst();
+            Log.i("Key is "+DateUtils.getDateKey(),"");
             LMemeber lMemeber1 = lMemeber.getLMember(member);
             if(attendenceModel != null)
             {
