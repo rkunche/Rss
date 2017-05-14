@@ -90,6 +90,8 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this,Attendence.class);
             startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
+            Intent intent=new Intent(this,Mem_Reports.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
 
