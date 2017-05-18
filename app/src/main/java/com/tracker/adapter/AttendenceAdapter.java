@@ -85,15 +85,24 @@ public class AttendenceAdapter extends BaseAdapter {
                 LAttendenceModel lAttendenceModel = attendenceModel.getAttendenceModel(memeber);
                 lAttendenceModel.setPresent(b);
 
-                Calendar calendar = Calendar.getInstance();
-                int date = calendar.get(Calendar.DATE);
-                int month = calendar.get(Calendar.MONTH);
-                int year = calendar.get(Calendar.YEAR);
-                lAttendenceModel.setMonth(month);
-                lAttendenceModel.setYear(year);
-                lAttendenceModel.setWeek(date);
-                Log.i("saving status", "saving status& "+b);
-                Log.i("saving status", "saving status& "+lAttendenceModel.getId());
+//                Calendar calendar = Calendar.getInstance();
+//                int date = calendar.get(Calendar.DATE);
+//                int month = calendar.get(Calendar.MONTH);
+//                int year = calendar.get(Calendar.YEAR);
+                String key = DateUtils.getDateKey();
+                String timeVaues[] = key.split("_");
+                int date = Integer.valueOf(timeVaues[0]);
+                int month = Integer.valueOf(timeVaues[1]);
+                int year = Integer.valueOf(timeVaues[2]);
+                int week = DateUtils.getWeek(Integer.valueOf(timeVaues[0]));
+                lAttendenceModel.setWeek(week);
+                lAttendenceModel.setMonth(Integer.valueOf(timeVaues[1]));
+                lAttendenceModel.setYear(Integer.valueOf(timeVaues[2]));
+
+                Log.i("saving status", "saving date& "+date);
+                Log.i("saving status", "saving week& "+week);
+                Log.i("saving status", "saving month& "+month);
+                Log.i("saving status", "saving year& "+year);
                 CrudMember.getInstance().saveAttendance(lAttendenceModel);
             }
         });
