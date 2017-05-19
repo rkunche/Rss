@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,6 +37,8 @@ public class Mem_Reports extends AppCompatActivity {
     RadioGroup radioMKGroup;
     @BindView(R.id.Attendence_Report)
     ListView attendanceReport;
+    @BindView(R.id.header_view)
+    LinearLayout headerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +85,8 @@ public class Mem_Reports extends AppCompatActivity {
         Areport.setWeekormonth(radioText);
         ReportResult attenReportObj = CrudMember.getInstance().getAttendenceReport(Areport);
         ReportAdapter reportAdapter = new ReportAdapter(this,attenReportObj,radioText);
+        //attendanceReport.addHeaderView();
+        attendanceReport.addHeaderView(headerView);
         attendanceReport.setAdapter(reportAdapter);
     }
 
