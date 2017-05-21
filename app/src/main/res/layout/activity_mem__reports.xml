@@ -86,29 +86,10 @@
         android:layout_below="@+id/radio_MKGroup"
         android:layout_centerHorizontal="true"
        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/header_view"
-        android:orientation="horizontal">
-        <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Present Count"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Absent Count"/>
-    </LinearLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_below="@+id/get_Report"
         android:id="@+id/Attendence_Report" />
-
-
-
-
 </RelativeLayout>

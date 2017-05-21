@@ -3,6 +3,7 @@ package com.tracker.student.ketto;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,8 +38,8 @@ public class Mem_Reports extends AppCompatActivity {
     RadioGroup radioMKGroup;
     @BindView(R.id.Attendence_Report)
     ListView attendanceReport;
-    @BindView(R.id.header_view)
-    LinearLayout headerView;
+    View listheaderView;
+    LayoutInflater listviewInflater;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,8 +86,9 @@ public class Mem_Reports extends AppCompatActivity {
         Areport.setWeekormonth(radioText);
         ReportResult attenReportObj = CrudMember.getInstance().getAttendenceReport(Areport);
         ReportAdapter reportAdapter = new ReportAdapter(this,attenReportObj,radioText);
-        //attendanceReport.addHeaderView();
-        attendanceReport.addHeaderView(headerView);
+        listviewInflater=LayoutInflater.from(this);
+        listheaderView=listviewInflater.inflate(R.layout.mem_report_header,null,false);
+        attendanceReport.addHeaderView(listheaderView);
         attendanceReport.setAdapter(reportAdapter);
     }
 

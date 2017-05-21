@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/Attendence_Report">
+       <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Present Count"
+            android:layout_marginLeft="150dp"
+            android:id="@+id/pCount"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Absent Count"
+            android:layout_marginLeft="270dp"
+            android:id="@+id/aCount"/>
+    </RelativeLayout>
