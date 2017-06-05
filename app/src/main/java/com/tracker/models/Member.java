@@ -1,10 +1,18 @@
 package com.tracker.models;
 
 
+import com.tracker.localmodels.LMemeber;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Member extends RealmObject{
 
+    @PrimaryKey
     private String mContact;
     private String mAddress;
     private String mName;
@@ -20,6 +28,10 @@ public class Member extends RealmObject{
     public void setMemberAddress(String memberAddress) {
         this.memberAddress = memberAddress;
     }
+
+
+    private boolean presentStatus;
+
 
     public String getJointime() {
         return jointime;
@@ -62,4 +74,13 @@ public class Member extends RealmObject{
     public void setMilan(String milan) {
         this.milan = milan;
     }
+
+    public boolean isPresentStatus() {
+        return presentStatus;
+    }
+
+    public void setPresentStatus(boolean presentStatus) {
+        this.presentStatus = presentStatus;
+    }
+
 }

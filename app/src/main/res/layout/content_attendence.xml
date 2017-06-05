@@ -12,28 +12,61 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.tracker.student.ketto.Attendence"
     tools:showIn="@layout/activity_attendence">
-  <Spinner
-      android:id="@+id/rss_spinner"
-      android:layout_width="fill_parent"
-      android:layout_height="42dp"
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
       android:layout_marginTop="8dp"
+      android:id="@+id/mem_khanda_view"
+      android:orientation="horizontal">
+    <TextView
+        android:id="@+id/Text_Khanda"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_gravity="center_vertical"
+        android:text="Khanda"
+        />
+
+    <Spinner
+        android:id="@+id/rss_spinner"
+        android:layout_width="194dp"
+        android:layout_height="32dp"
+        android:layout_weight="1"
+        android:layout_marginRight="16dp"
+        android:layout_gravity="center_vertical"
+        />
+  </LinearLayout>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:layout_below="@+id/mem_khanda_view"
+      android:id="@+id/milan_lay"
+      android:orientation="horizontal">
+  <TextView
+      android:id="@+id/Text_Milan"
+      android:layout_width="80dp"
+      android:layout_height="32dp"
+      android:layout_marginLeft="16dp"
+      android:text="Milan"
       />
 
   <Spinner
       android:id="@+id/rss_spinner_milan"
-      android:layout_below="@+id/rss_spinner"
-      android:layout_width="fill_parent"
-      android:layout_height="42dp"
-      android:layout_marginTop="8dp"
+      android:layout_width="wrap_content"
+      android:layout_height="32dp"
+      android:layout_marginRight="16dp"
+      android:layout_weight="1"
       />
+  </LinearLayout>
 
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:id="@+id/time_setting"
-      android:layout_below="@+id/rss_spinner_milan"
+      android:layout_below="@+id/milan_lay"
       android:layout_marginTop="8dp"
-      android:text="Set time"/>
+      android:text="Set Date"/>
 
   <ListView
       android:layout_width="match_parent"
