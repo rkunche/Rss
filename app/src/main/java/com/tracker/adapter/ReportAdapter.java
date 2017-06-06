@@ -23,6 +23,8 @@ public class ReportAdapter  extends BaseAdapter{
         this.reportResult = reportResult;
         inflater = LayoutInflater.from(context);
         this.type =type;
+
+        
     }
     @Override
     public int getCount() {
